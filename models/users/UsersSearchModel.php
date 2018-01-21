@@ -19,7 +19,7 @@ class UsersSearchModel extends UsersRecord
     {
         return [
             [['id'], 'integer'],
-            [['username', 'auth_key'], 'safe'],
+            [['username', 'auth_key', 'email'], 'safe'],
         ];
     }
 

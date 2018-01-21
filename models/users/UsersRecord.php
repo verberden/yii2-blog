@@ -32,10 +32,11 @@ class UsersRecord extends \yii\db\ActiveRecord implements \yii\web\IdentityInter
     public function rules()
     {
         return [
-            [['username'], 'required'],
+            [['email', ], 'required'],
             [['username', 'password', 'auth_key'], 'string', 'max' => 255],
             [['username'], 'unique'],
             [['auth_key'], 'unique'],
+            [['email'], 'unique'],
         ];
     }
 
@@ -47,6 +48,7 @@ class UsersRecord extends \yii\db\ActiveRecord implements \yii\web\IdentityInter
         return [
             'id' => 'ID',
             'username' => 'Username',
+            'email' => 'Email',
             'password' => 'Password',
             'auth_key' => 'Auth Key',
         ];
@@ -81,6 +83,11 @@ class UsersRecord extends \yii\db\ActiveRecord implements \yii\web\IdentityInter
     public static function findIdentity($id)
     {
         return static::findOne($id);
+    }
+
+    public static function findByEmail($email)
+    {
+        return static::findOne($email);
     }
 
     public function getAuthKey()
