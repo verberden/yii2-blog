@@ -2,6 +2,7 @@
 
 namespace app\models;
 
+use app\models\users\UsersRecord;
 use Yii;
 use yii\base\Model;
 
@@ -15,67 +16,55 @@ class LoginForm extends Model
 {
     public $username;
     public $password;
-    public $rememberMe = true;
+    public $rememberMe;
 
-    private $_user = false;
+    /** @var UserRecord */
+    public $user;
 
+    private function getUser($username)
+    {
 
-    /**
-     * @return array the validation rules.
-     */
+        if (!$this->user)
+            $this->user = $this->fetchUser($username);
+
+        return $this->user;
+    }
+    private function fetchUser($username)
+    {
+        return UsersRecord::findOne(compact('username'));
+    }
+
+    private function isCorrectHash($plaintext, $hash)
+    {
+        return Yii::$app->security->validatePassword($plaintext, $hash);
+    }
+
     public function rules()
     {
         return [
-            // username and password are both required
             [['username', 'password'], 'required'],
-            // rememberMe must be a boolean value
             ['rememberMe', 'boolean'],
-            // password is validated by validatePassword()
-            ['password', 'validatePassword'],
+            ['password', 'validatePassword']
         ];
     }
 
-    /**
-     * Validates the password.
-     * This method serves as the inline validation for password.
-     *
-     * @param string $attribute the attribute currently being validated
-     * @param array $params the additional name-value pairs given in the rule
-     */
-    public function validatePassword($attribute, $params)
+    public function validatePassword($attributeName)
     {
-        if (!$this->hasErrors()) {
-            $user = $this->getUser();
+        if ($this->hasErrors())
+            return;
 
-            if (!$user || !$user->validatePassword($this->password)) {
-                $this->addError($attribute, 'Incorrect username or password.');
-            }
-        }
+        $user = $this->getUser($this->username);
+        if (!($user and $this->isCorrectHash($this->$attributeName, $user->password)))
+            $this->addError('password', 'Incorrect username or password.');
     }
 
-    /**
-     * Logs in a user using the provided username and password.
-     * @return bool whether the user is logged in successfully
-     */
     public function login()
     {
-        if ($this->validate()) {
-            return Yii::$app->user->login($this->getUser(), $this->rememberMe ? 3600*24*30 : 0);
-        }
-        return false;
-    }
-
-    /**
-     * Finds user by [[username]]
-     *
-     * @return User|null
-     */
-    public function getUser()
-    {
-        if ($this->_user === false) {
-            $this->_user = User::findByUsername($this->username);
-        }
-
-        return $this->_user;
+        if (!$this->validate())
+            return false;
+        $user = $this->getUser($this->username);
+        if (!$user)
+            return false;
+        return Yii::$app->user->login($user, $this->rememberMe ? 3600 * 24 * 30 : 0);
     }
 }
