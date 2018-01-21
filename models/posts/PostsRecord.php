@@ -35,7 +35,7 @@ class PostsRecord extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['user_id'], 'required'],
+            //[['user_id'], 'required'],
             [['user_id'], 'integer'],
             [['body'], 'string'],
             [['title'], 'string', 'max' => 255],
@@ -61,6 +61,17 @@ class PostsRecord extends \yii\db\ActiveRecord
      */
     public function getUser()
     {
-        return $this->hasOne(Users::className(), ['id' => 'user_id']);
+        return $this->hasOne(UsersRecord::className(), ['id' => 'user_id']);
+    }
+
+
+    public function beforeSave($insert)
+    {
+        $return = parent:: beforeSave($insert);
+
+        if ($this->isNewRecord)
+            $this->user_id = Yii::$app->user->getId();
+
+        return $return;
     }
 }
