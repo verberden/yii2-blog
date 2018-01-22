@@ -104,6 +104,6 @@ class UsersRecord extends \yii\db\ActiveRecord implements \yii\web\IdentityInter
         $token,
         $type = null
     ) {
-        throw new NotSupportedException('You can only login by username/password pair for now.');
+        throw new NotSupportedException('You can only login by email/password pair for now.');
     }
 }

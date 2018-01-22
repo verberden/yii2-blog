@@ -20,6 +20,17 @@ class PostsController extends Controller
     public function behaviors()
     {
         return [
+            'access' => [
+                'class' => \yii\filters\AccessControl::className(),
+                'only' => ['create', 'delete', 'update'],
+                'rules' => [
+                    [
+                        'actions' => ['create', 'delete', 'update'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -86,6 +97,8 @@ class PostsController extends Controller
     {
         $model = $this->findModel($id);
 
+        if ($model->user_id == Yii::$app->user->id) {
+
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         }
@@ -93,6 +106,9 @@ class PostsController extends Controller
         return $this->render('update', [
             'model' => $model,
         ]);
+
+        } else
+            throw new NotFoundHttpException('You have no permission.');
     }
 
     /**
@@ -104,9 +120,14 @@ class PostsController extends Controller
      */
     public function actionDelete($id)
     {
+
+        if ($this->findModel($id)->user_id == Yii::$app->user->id) {
+
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
+        } else
+            throw new NotFoundHttpException('You have no permission.');
     }
 
     /**
@@ -124,4 +145,13 @@ class PostsController extends Controller
 
         throw new NotFoundHttpException('The requested page does not exist.');
     }
+
+   /* protected function checkPermission($id)
+    {
+                if ($this->findModel($id)->user_id == Yii::$app->user->id) {
+
+        } else
+            throw new NotFoundHttpException('You have no permission.');
+
+    }*/
 }

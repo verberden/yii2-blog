@@ -22,8 +22,10 @@ class UsersController extends Controller
         return [
             'access' => [
                 'class' => \yii\filters\AccessControl::className(),
+                'only' => ['create', 'delete', 'update'],
                 'rules' => [
                     [
+                        'actions' => ['create', 'delete', 'update'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -93,7 +95,10 @@ class UsersController extends Controller
      */
     public function actionUpdate($id)
     {
+
         $model = $this->findModel($id);
+
+
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -102,6 +107,7 @@ class UsersController extends Controller
         return $this->render('update', [
             'model' => $model,
         ]);
+
     }
 
     /**
