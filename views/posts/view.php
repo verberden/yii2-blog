@@ -29,8 +29,23 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $username,
         'attributes' => [
 
-            'username',
+
+            [                                                  // the owner name of the model
+                'label' => 'Автор.',
+                'captionOptions'=>[ 'style'=>'width: 300px'],
+                'value' => function($username) use ($id) {
+                            return Html::tag('b',Html::a(Html::encode($username['username']), ['users/view', 'id' => $id], [
+                                'title' => 'My Super Link',
+                                'target' => '_blank',
+                                'alt' => 'Link to Super Website',
+                            ] ));
+                            },
+                'format' => 'Html',
+
+
+            ],
         ],
+
     ]) ?>
     <?= DetailView::widget([
         'model' => $model,

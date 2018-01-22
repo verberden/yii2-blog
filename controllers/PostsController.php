@@ -69,6 +69,7 @@ class PostsController extends Controller
         return $this->render('view', [
             'model' => $this->findModel($id),
             'username' => $username,
+            'id' => $this->findModel($id)->user_id,
         ]);
     }
 

@@ -34,8 +34,6 @@ $id = 1;
             'id',
             'username',
             'email',
-            'password',
-            'auth_key',
 
         ],
     ]) ?>
