@@ -8,6 +8,7 @@ use app\models\users\UsersSearchModel;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\data\ArrayDataProvider;
 
 /**
  * UsersController implements the CRUD actions for UsersRecord model.
@@ -63,8 +64,17 @@ class UsersController extends Controller
      */
     public function actionView($id)
     {
+        $data = UsersRecord::getOneUserPosts($id);
+        //vd($data);
+        $provider = new ArrayDataProvider([
+            'allModels' => $data,
+            'pagination' => [
+                'pageSize' => 10,
+            ],
+        ]);
         return $this->render('view', [
             'model' => $this->findModel($id),
+            'data' => $provider,
         ]);
     }
 
@@ -99,7 +109,7 @@ class UsersController extends Controller
         $model = $this->findModel($id);
 
 
-        if ($this->findModel($id)->user_id == Yii::$app->user->id) {
+        if ($this->findModel($id)->id == Yii::$app->user->id) {//авторизованный пользователь является пользователем профайла
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -122,7 +132,7 @@ class UsersController extends Controller
      */
     public function actionDelete($id)
     {
-        if ($this->findModel($id)->user_id == Yii::$app->user->id) {
+        if ($this->findModel($id)->id == Yii::$app->user->id) {
 
         $this->findModel($id)->delete();
 

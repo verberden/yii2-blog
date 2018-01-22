@@ -2,7 +2,7 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
-
+//vd($dataProvider);
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\posts\PostsSearchModel */
 /* @var $dataProvider yii\data\ActiveDataProvider */

@@ -2,13 +2,16 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
+use yii\grid\GridView;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\users\UsersRecord */
-
+//vd($data);
 $this->title = $model->id;
 $this->params['breadcrumbs'][] = ['label' => 'Users Records', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
+$id = 1;
+
 ?>
 <div class="users-record-view">
 
@@ -36,5 +39,24 @@ $this->params['breadcrumbs'][] = $this->title;
 
         ],
     ]) ?>
+
+    <p>
+        <?= GridView::widget([
+            'dataProvider' => $data,
+            'columns' => [
+                'id',
+                'title',
+                'body:ntext',
+
+                ['class' => 'yii\grid\ActionColumn',
+                    'controller'=> 'posts',
+
+
+                ],
+            ]
+        ]); ?>
+
+
+    </p>
 
 </div>

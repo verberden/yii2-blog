@@ -101,7 +101,7 @@ class PostsController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->user_id == Yii::$app->user->id) {
+        if ($model->user_id == Yii::$app->user->id) {//авторизованный пользователь является автором постинга
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);

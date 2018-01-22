@@ -107,4 +107,21 @@ class UsersRecord extends \yii\db\ActiveRecord implements \yii\web\IdentityInter
     ) {
         throw new NotSupportedException('You can only login by email/password pair for now.');
     }
+
+    public static function getOneUserPosts($id)
+    {
+        $rows = (new \yii\db\Query())
+            ->select(['id','title', 'body'])
+            ->from('posts')
+            ->where('user_id=:id')->addParams([':id' => $id])
+            ->all();
+        $rows_s=[];
+        foreach ($rows as $key)
+        {
+            $rows_s[intval($key['id'])]=$key;
+
+        }
+        //vd($rows);
+        return $rows_s;
+    }
 }

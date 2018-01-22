@@ -45,6 +45,7 @@ $config = [
             ],
         ],
         'urlManager' => [
+            'baseUrl' => 'http://yii2-blog.loc',
             'enablePrettyUrl' => true,
             'showScriptName' => false
         ],
