@@ -33,7 +33,8 @@ class UsersRecord extends \yii\db\ActiveRecord implements \yii\web\IdentityInter
     {
         return [
             [['email', ], 'required'],
-            [['username', 'password', 'auth_key', 'email'], 'string', 'max' => 255],
+            [['email'], 'email'],
+            [['username', 'password', 'auth_key'], 'string', 'max' => 255],
             [['username'], 'unique'],
             [['auth_key'], 'unique'],
             [['email'], 'unique'],

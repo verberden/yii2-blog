@@ -22,10 +22,10 @@ class UsersController extends Controller
         return [
             'access' => [
                 'class' => \yii\filters\AccessControl::className(),
-                'only' => ['delete', 'update'],
+                'only' => ['view','delete', 'update'],
                 'rules' => [
                     [
-                        'actions' => ['delete', 'update'],
+                        'actions' => ['view','delete', 'update'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
