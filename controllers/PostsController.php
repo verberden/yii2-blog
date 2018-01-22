@@ -3,6 +3,7 @@
 namespace app\controllers;
 
 use Yii;
+use app\models\users\UsersRecord;
 use app\models\posts\PostsRecord;
 use app\models\posts\PostsSearchModel;
 use yii\web\Controller;
@@ -63,8 +64,11 @@ class PostsController extends Controller
      */
     public function actionView($id)
     {
+        $username = ['username' => UsersRecord::findOne($this->findModel($id)->user_id)->username];
+        //vd($username);
         return $this->render('view', [
             'model' => $this->findModel($id),
+            'username' => $username,
         ]);
     }
 

@@ -38,7 +38,7 @@ class PostsRecord extends \yii\db\ActiveRecord
             //[['user_id'], 'required'],
             [['user_id'], 'integer'],
             [['body'], 'string'],
-            [['title'], 'string', 'max' => 255],
+            [['title',], 'string', 'max' => 255],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => UsersRecord::className(), 'targetAttribute' => ['user_id' => 'id']],
         ];
     }

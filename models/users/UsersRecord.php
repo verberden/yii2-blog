@@ -33,7 +33,7 @@ class UsersRecord extends \yii\db\ActiveRecord implements \yii\web\IdentityInter
     {
         return [
             [['email', ], 'required'],
-            [['username', 'password', 'auth_key'], 'string', 'max' => 255],
+            [['username', 'password', 'auth_key', 'email'], 'string', 'max' => 255],
             [['username'], 'unique'],
             [['auth_key'], 'unique'],
             [['email'], 'unique'],
@@ -75,7 +75,7 @@ class UsersRecord extends \yii\db\ActiveRecord implements \yii\web\IdentityInter
         return $return;
     }
 
-    public function getId()
+    public function getId() //необходимые реализации чтобы работать с сущностью как IdentityInterface
     {
         return $this->id;
     }

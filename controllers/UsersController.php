@@ -22,10 +22,10 @@ class UsersController extends Controller
         return [
             'access' => [
                 'class' => \yii\filters\AccessControl::className(),
-                'only' => ['create', 'delete', 'update'],
+                'only' => ['delete', 'update'],
                 'rules' => [
                     [
-                        'actions' => ['create', 'delete', 'update'],
+                        'actions' => ['delete', 'update'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -99,6 +99,7 @@ class UsersController extends Controller
         $model = $this->findModel($id);
 
 
+        if ($this->findModel($id)->user_id == Yii::$app->user->id) {
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -107,6 +108,8 @@ class UsersController extends Controller
         return $this->render('update', [
             'model' => $model,
         ]);
+        } else
+            throw new NotFoundHttpException('You have no permission.');
 
     }
 
@@ -119,9 +122,13 @@ class UsersController extends Controller
      */
     public function actionDelete($id)
     {
+        if ($this->findModel($id)->user_id == Yii::$app->user->id) {
+
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
+        } else
+            throw new NotFoundHttpException('You have no permission.');
     }
 
     /**
