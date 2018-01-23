@@ -11,6 +11,11 @@ use yii\widgets\Breadcrumbs;
 use app\assets\AppAsset;
 
 AppAsset::register($this);
+
+$this->registerJsFile(
+    'scripts/index.js',
+    ['depends'=>'app\assets\AppAsset']
+);
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -39,7 +44,7 @@ AppAsset::register($this);
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => [
             ['label' => 'Home', 'url' => ['/site/index']],
-            ['label' => 'About', 'url' => ['/site/about']],
+            ['label' => 'Обратная связь', 'url' => ['/site/about'], 'options' => ['class' => 'nav signup']],
             ['label' => 'Users', 'url' => ['/users']],
             Yii::$app->user->isGuest ? (
                 ['label' => 'Login', 'url' => ['/site/login']]
@@ -66,6 +71,17 @@ AppAsset::register($this);
         <?= $content ?>
     </div>
 </div>
+
+<!-- Modal "Обратная связь" -->
+<div class="modal fade" id="my-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-body">
+
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 
 <footer class="footer">
     <div class="container">

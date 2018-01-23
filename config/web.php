@@ -47,7 +47,11 @@ $config = [
         'urlManager' => [
             'baseUrl' => 'http://yii2-blog.loc',
             'enablePrettyUrl' => true,
-            'showScriptName' => false
+            'showScriptName' => false,
+            'rules' =>[
+            'signup'=>'site/signup',
+            'submitsignup'=>'site/submitsignup',
+                ]
         ],
         'db' => $db,
         /*

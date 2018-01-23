@@ -124,4 +124,33 @@ class SiteController extends Controller
     {
         return $this->render('about');
     }
+
+    // Всплывшее модальное окно заполняем представлением signup.php формы с полями
+    public function actionSignup()
+    {
+        $model = new \app\models\SignupForm();
+        //$model->id =$userid;
+        return $this->renderPartial('signup', [
+            'model' => $model,
+        ]);
+    }
+
+// По нажатию в модальном окне на Отправить - форма отправляется администратору на почту
+    public function actionSubmitsignup()
+    {
+        $model = new \app\models\SignupForm();
+        $model->load(Yii::$app->request->post());
+
+        if($model->load(Yii::$app->request->post()) && $model->contact(Yii::$app->params['adminEmail'])) {
+
+            $success=true;
+            return json_encode($success);
+        }
+        else
+        {
+            return $this->renderPartial('signup', [
+                'model' => $model,
+            ]);
+        }
+    }
 }
