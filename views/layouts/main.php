@@ -43,9 +43,9 @@ $this->registerJsFile(
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => [
-            ['label' => 'Home', 'url' => ['/site/index']],
+            ['label' => 'Постинги', 'url' => ['/site/index']],
+            ['label' => 'Пользователи', 'url' => ['/users']],
             ['label' => 'Обратная связь', 'url' => ['/site/about'], 'options' => ['class' => 'nav signup']],
-            ['label' => 'Users', 'url' => ['/users']],
             Yii::$app->user->isGuest ? (
                 ['label' => 'Login', 'url' => ['/site/login']]
             ) : (

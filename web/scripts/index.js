@@ -20,6 +20,9 @@ $(document).ready(function () {
             }
         });
     });
+
+
+
     $(document).on("submit", '.signup-form', function (e) {
         e.preventDefault();
         var form = $(this);

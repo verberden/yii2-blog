@@ -6,7 +6,7 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\users\UsersRecord */
 
-$this->title = 'Create Users Record';
+$this->title = 'Новый пользователь';
 $this->params['breadcrumbs'][] = ['label' => 'Users Records', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>

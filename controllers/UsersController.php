@@ -90,7 +90,9 @@ class UsersController extends Controller
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         }
-
+        /*return $this->renderPartial('create', [
+            'model' => $model,
+        ]);*/
         return $this->render('create', [
             'model' => $model,
         ]);
