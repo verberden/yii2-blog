@@ -38,6 +38,7 @@ class PostsRecord extends \yii\db\ActiveRecord
             //[['user_id'], 'required'],
             [['user_id'], 'integer'],
             [['body'], 'string'],
+            [['category'], 'safe'],
             [['title',], 'string', 'max' => 255],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => UsersRecord::className(), 'targetAttribute' => ['user_id' => 'id']],
         ];
@@ -53,6 +54,7 @@ class PostsRecord extends \yii\db\ActiveRecord
             'user_id' => 'User ID',
             'title' => 'Title',
             'body' => 'Body',
+            'category' => 'Category',
         ];
     }
 
@@ -74,4 +76,12 @@ class PostsRecord extends \yii\db\ActiveRecord
 
         return $return;
     }
+
+    //public static const CATEGORIES = [];
+    public static function getCategories()
+    {
+        $data =['1'=>'Категория 1','2'=>'Категория 2', '3'=>'Категория 3'];
+        return $data;
+    }
+
 }

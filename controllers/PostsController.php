@@ -49,10 +49,12 @@ class PostsController extends Controller
     {
         $searchModel = new PostsSearchModel();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $data = PostsRecord::getCategories();
 
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'dataCategories' => $data,
         ]);
     }
 
@@ -66,10 +68,12 @@ class PostsController extends Controller
     {
         $username = ['username' => UsersRecord::findOne($this->findModel($id)->user_id)->username];
         //vd($username);
+        $data = PostsRecord::getCategories();
         return $this->render('view', [
             'model' => $this->findModel($id),
             'username' => $username,
             'id' => $this->findModel($id)->user_id,
+            'dataCategories' => $data,
         ]);
     }
 
@@ -80,14 +84,18 @@ class PostsController extends Controller
      */
     public function actionCreate()
     {
+        $data = PostsRecord::getCategories();
         $model = new PostsRecord();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            //vd(Yii::$app->request->post());
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
+
         return $this->render('create', [
             'model' => $model,
+            'data' => $data,
         ]);
     }
 

@@ -9,8 +9,10 @@ use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
 use app\assets\AppAsset;
+use app\assets\SelAsset;
 
 AppAsset::register($this);
+SelAsset::register($this);
 
 $this->registerJsFile(
     'scripts/index.js',
@@ -92,6 +94,14 @@ $this->registerJsFile(
 </footer>
 
 <?php $this->endBody() ?>
+<script>
+
+    $(document).ready(function() {
+        //$('#postsrecord-category').hide();
+        $("#postsrecord-category").select2();
+
+    });
+</script>
 </body>
 </html>
 <?php $this->endPage() ?>
