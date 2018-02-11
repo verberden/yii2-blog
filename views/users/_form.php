@@ -10,7 +10,7 @@ use yii\widgets\ActiveForm;
 
 <div class="users-record-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin(['options' => ['class' => 'create-form']]); ?>
 
     <?= $form->field($model, 'username')->textInput(['maxlength' => true]) ?>
 

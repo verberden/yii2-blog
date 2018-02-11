@@ -21,6 +21,27 @@ $(document).ready(function () {
         });
     });
 
+    $('.create').click(function(event){ // нажатие на меню - выпадает модальное окно
+        event.preventDefault();
+
+
+        var url = 'users/create';
+        var clickedbtn = $(this);
+
+        var modalContainer = $('#my-modal');
+        var modalBody = modalContainer.find('.modal-body');
+        modalContainer.modal({show:true});
+        $.ajax({
+            url: url,
+            type: "GET",
+            data: {/*'userid':UserID*/},
+            success: function (data) {
+                $('.modal-body').html(data);
+                modalContainer.modal({show:true});
+            }
+        });
+    });
+
 
 
     $(document).on("submit", '.signup-form', function (e) {
@@ -53,5 +74,7 @@ $(document).ready(function () {
             }
         });
     });
+
+
 
 });

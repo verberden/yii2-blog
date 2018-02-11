@@ -38,6 +38,7 @@ class UsersRecord extends \yii\db\ActiveRecord implements \yii\web\IdentityInter
             [['username'], 'unique'],
             [['auth_key'], 'unique'],
             [['email'], 'unique'],
+            [['email'], 'validateEmailEmpty', 'skipOnEmpty'=> false]
         ];
     }
 
@@ -62,6 +63,7 @@ class UsersRecord extends \yii\db\ActiveRecord implements \yii\web\IdentityInter
     {
         return $this->hasMany(PostsRecord::className(), ['user_id' => 'id']);
     }
+
 
     public function beforeSave($insert)
     {
@@ -124,4 +126,14 @@ class UsersRecord extends \yii\db\ActiveRecord implements \yii\web\IdentityInter
         //vd($rows);
         return $rows_s;
     }
+
+    public function validateEmailEmpty()
+    {
+        if(empty($this->email))
+        {
+            $errorMsg= 'Укажите ваш email';
+            $this->addError('email',$errorMsg);
+        }
+    }
+
 }

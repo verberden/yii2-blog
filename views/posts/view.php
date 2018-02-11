@@ -1,5 +1,5 @@
 <?php
-
+//vd($model);
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 

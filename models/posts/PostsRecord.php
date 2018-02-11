@@ -6,7 +6,8 @@ use app\models\users\UsersRecord;
 use app\models\posts\PostsSearchModel;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-
+use yii\web\UploadedFile;
+use yii\base\Model;
 use Yii;
 
 /**
@@ -21,6 +22,7 @@ use Yii;
  */
 class PostsRecord extends \yii\db\ActiveRecord
 {
+    public $imageFile;
     /**
      * @inheritdoc
      */
@@ -40,6 +42,7 @@ class PostsRecord extends \yii\db\ActiveRecord
             [['body'], 'string'],
             [['title',], 'string', 'max' => 255],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => UsersRecord::className(), 'targetAttribute' => ['user_id' => 'id']],
+            [['imageFile'], 'file', 'skipOnEmpty' => true,  'extensions' => 'png, jpg', 'mimeTypes' => 'image/jpeg, image/png', 'maxSize'=>'100000',],
         ];
     }
 
@@ -53,6 +56,7 @@ class PostsRecord extends \yii\db\ActiveRecord
             'user_id' => 'User ID',
             'title' => 'Title',
             'body' => 'Body',
+            'imageFile' => 'Image'
         ];
     }
 
@@ -73,5 +77,15 @@ class PostsRecord extends \yii\db\ActiveRecord
             $this->user_id = Yii::$app->user->getId();
 
         return $return;
+    }
+
+    public function upload()
+    {
+        if ($this->validate()) {
+            $this->imageFile->saveAs('uploads/' . $this->imageFile->baseName . '.' . $this->imageFile->extension);
+            return true;
+        } else {
+            return false;
+        }
     }
 }

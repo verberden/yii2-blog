@@ -5,10 +5,13 @@ namespace app\controllers;
 use Yii;
 use app\models\users\UsersRecord;
 use app\models\users\UsersSearchModel;
+use app\models\posts\PostsRecord;
+use app\models\posts\PostsSearchModel;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\data\ArrayDataProvider;
+use yii\data\ActiveDataProvider;
 
 /**
  * UsersController implements the CRUD actions for UsersRecord model.
@@ -65,16 +68,47 @@ class UsersController extends Controller
     public function actionView($id)
     {
         $data = UsersRecord::getOneUserPosts($id);
-        //vd($data);
+
+
         $provider = new ArrayDataProvider([
             'allModels' => $data,
             'pagination' => [
                 'pageSize' => 10,
             ],
         ]);
+
+        $rows_s= (new \yii\db\Query())
+            ->select(['users.id as u_id', 'users.username','users.email','posts.title','posts.body','posts.id'])
+            ->from('users')
+            ->leftJoin('posts', 'posts.user_id = users.id')
+            ->where(['users.id'=>$id]);//->all()
+
+        /*UsersRecord::find()
+            ->With('posts')
+            ->where(['users.id'=>$id]),*/
+
+        $provider_p =  new ActiveDataProvider([
+            'query' =>$rows_s,
+            'pagination' => [
+                'pageSize' => 10,
+            ],
+        ]);
+
+
+        $r=UsersRecord::findOne($id);
+        //$p=$r->posts;
+        /*$p=UsersRecord::find()
+            ->With('posts')
+            ->where(['users.id'=>$id])
+            ->all();*/
+        //echo gettype($p);
+        //vd($p[0]->posts[1]->id);
+        //vd($provider_p);
+        //vd($q=$this->findModel($id)->getPosts());
+        //vd($rows_s);
         return $this->render('view', [
-            'model' => $this->findModel($id),
-            'data' => $provider,
+            'model' => $provider_p,//$p,//$this->findModel($id),
+            'data' => $r,
         ]);
     }
 
@@ -90,12 +124,12 @@ class UsersController extends Controller
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         }
-        /*return $this->renderPartial('create', [
-            'model' => $model,
-        ]);*/
-        return $this->render('create', [
+        return $this->renderPartial('create', [
             'model' => $model,
         ]);
+        /*return $this->render('create', [
+            'model' => $model,
+        ]);*/
     }
 
     /**
@@ -153,6 +187,7 @@ class UsersController extends Controller
     protected function findModel($id)
     {
         if (($model = UsersRecord::findOne($id)) !== null) {
+        //if (($model = UsersRecord::find()->with('posts')->where(['id'=>$id])->all()) !== null) {
             return $model;
         }
 
