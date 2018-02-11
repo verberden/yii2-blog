@@ -88,7 +88,6 @@ class PostsController extends Controller
         $data = PostsRecord::getCategories();
         $model = new PostsRecord();
 
-<<<<<<< HEAD
         if ($model->load(Yii::$app->request->post())) {
             $model->imageFile = UploadedFile::getInstance($model, 'imageFile');
             if (!empty($model->imageFile)) {
@@ -103,14 +102,6 @@ class PostsController extends Controller
             //$imageFile = UploadedFile::getInstance($model, 'imageFile');
 
         }
-=======
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            //vd(Yii::$app->request->post());
-            return $this->redirect(['view', 'id' => $model->id]);
-        }
-
-
->>>>>>> d2f8e43a4b9ada8b4c8a27db26499961d9fe3a94
         return $this->render('create', [
             'model' => $model,
             'data' => $data,
