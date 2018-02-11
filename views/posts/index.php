@@ -9,6 +9,7 @@ use yii\grid\GridView;
 
 $this->title = 'Posts Records';
 $this->params['breadcrumbs'][] = $this->title;
+//vd($dataCategories);
 ?>
 <div class="posts-record-index">
 
@@ -27,8 +28,23 @@ $this->params['breadcrumbs'][] = $this->title;
 
             'title',
             'body:ntext',
+            [
+
+                    'attribute'=>'category',
+                    'value'=> function($data) use ($dataCategories) {
+                            foreach ($dataCategories as $key =>$value){
+                                if ($key==$data['category']) {
+                                        return Html::encode($value);
+                                }                            }
+                                //vd($data);
+
+                    },
+                ],
+
 
             ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>
 </div>
+
+

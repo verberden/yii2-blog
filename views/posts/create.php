@@ -16,6 +16,13 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?= $this->render('_form', [
         'model' => $model,
+        'data' => $data,
     ]) ?>
 
 </div>
+
+<script>
+    $(document).ready(function() {
+        $("#postsrecord-category").select2();
+    });
+</script>

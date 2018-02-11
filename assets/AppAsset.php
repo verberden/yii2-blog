@@ -21,11 +21,21 @@ class AppAsset extends AssetBundle
     public $baseUrl = '@web';
     public $css = [
         'css/site.css',
+        /*'css/select2.css',
+        'css/select2-addl.css',
+        'css/select2-bootstrap.css',
+        'css/select2-classic.css',
+        'css/select2-default.css',
+        'css/select2-krajee.css',*/
     ];
     public $js = [
+        /*'js/select2.full.js',
+        'js/select2-krajee.js'*/
+
     ];
     public $depends = [
         'yii\web\YiiAsset',
         'yii\bootstrap\BootstrapPluginAsset',
+
     ];
 }

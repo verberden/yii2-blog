@@ -3,6 +3,7 @@
 use yii\helpers\Html;
 use  yii\web\View;
 use yii\widgets\ActiveForm;
+<<<<<<< HEAD
 use app\assets\ImgcorpAsset;
 
 ImgcorpAsset::register($this);
@@ -35,10 +36,15 @@ jQuery("#imgInp").change(function(event) {
 JS;
 $this->registerJs($script, View::POS_END);
 
+=======
+use kartik\select2\Select2;
+>>>>>>> d2f8e43a4b9ada8b4c8a27db26499961d9fe3a94
 
 /* @var $this yii\web\View */
 /* @var $model app\models\posts\PostsRecord */
 /* @var $form yii\widgets\ActiveForm */
+
+//$data=['one','two'];
 ?>
 
 <div class="posts-record-form">
@@ -49,11 +55,27 @@ $this->registerJs($script, View::POS_END);
 
     <?= $form->field($model, 'body')->textarea(['rows' => 6]) ?>
 
+<<<<<<< HEAD
     <?= $form->field($model, 'imageFile')->fileInput(['id' => 'imgInp']) ?>
 
     <div>
         <img id="target" src="#" alt="your image" />
     </div>
+=======
+    <?= $form->field($model, 'category')->dropDownList(\app\models\posts\PostsRecord::getCategories())
+
+    /* form-control
+
+$form->field($model, 'category')->widget(Select2::classname(), [
+        'data' => $data,
+        'language' => 'ru',
+        'options' => ['placeholder' => 'Выберите категорию ...'],
+        'pluginOptions' => [
+            'allowClear' => true
+        ],
+    ])
+    ;*/ ?>
+>>>>>>> d2f8e43a4b9ada8b4c8a27db26499961d9fe3a94
 
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>

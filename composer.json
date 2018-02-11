@@ -18,7 +18,11 @@
         "yiisoft/yii2": "~2.0.5",
         "yiisoft/yii2-bootstrap": "~2.0.0",
         "yiisoft/yii2-swiftmailer": "~2.0.0",
+<<<<<<< HEAD
         "yiisoft/yii2-jui": "^2.0"
+=======
+        "kartik-v/yii2-widget-select2": "@dev"
+>>>>>>> d2f8e43a4b9ada8b4c8a27db26499961d9fe3a94
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",

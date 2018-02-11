@@ -53,6 +53,17 @@ $this->params['breadcrumbs'][] = $this->title;
 
             'title',
             'body:ntext',
+            [   'attribute'=>'category',                                              // the owner name of the model
+                'label' => 'Категория.',
+                'captionOptions'=>[ 'style'=>'width: 300px'],
+                'value' => function($data) use ($dataCategories) {
+                            foreach (\app\models\posts\PostsRecord::getCategories() as $key =>$value){
+                                if ($key==$data['category']) {
+                                        return Html::encode($value);
+                                }                            }}
+
+
+            ],
         ],
     ]) ?>
 
